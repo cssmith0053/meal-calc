@@ -1,1 +1,1 @@
-# meal-calc
+Meal calculator is a program I coded for a Programming I assignment, which allowed the user to enter a price and tip, and from that, it calculated the total cost of a meal using Florida's general state sales tax rate. It being Programming I, the program was relatively trivial. However, now that I'm in Programming II, my partner Angel Vera and I plan to use this group project to show how far we've come as programmers and all we've learned this last semester through updating it and adding all the bells and whistles we think it deserves.
