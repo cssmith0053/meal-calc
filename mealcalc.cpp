@@ -1,49 +1,64 @@
-// File: mealcalc.cpp
-// Class: COP 2006, 202208, 80599
-// Who: Christopher Smith
-// Desc.: Calculate a meal with price, tax and tip using
-//      console
-// --------------------------------------------------------
+#include <iostream>
+#include <iomanip>
 
-#include <iostream> // Console I/O
-#include <iomanip> // Formatting floating point
+class MealCalculator {
+private:
+    float mealPrice;
+    const float SALES_TAX_RATE = 0.065;
 
-// Constants
-// --------------------------------------------------------
-const float SALES_TAX_RATE = 0.065;
+public:
+    MealCalculator() : mealPrice(0.0) {}
 
-/**
- * main application starting point
- * @return integer (0=SUCCESS)
- */
+    void setMealPrice(float price) {
+        mealPrice = price;
+    }
 
-int main(){
+    void calculateTax() const {
+        float salesTax = mealPrice * SALES_TAX_RATE;
+        std::cout << "Tax: " << salesTax << std::endl;
+    }
 
-    // Prompt user for a meal ticket price
-    float mealPrice = 0.0; // Copy Assign
+    void calculateSubtotal() const {
+        float subtotal = mealPrice + (mealPrice * SALES_TAX_RATE);
+        std::cout << "Subtotal: " << subtotal << std::endl;
+    }
+
+    void calculateTip(float tipPercent) const {
+        float subtotal = mealPrice + (mealPrice * SALES_TAX_RATE);
+        float tip = subtotal * (tipPercent / 100.0f);
+        std::cout << "Tip: " << tip << std::endl;
+    }
+
+    void calculateTotal(float tipPercent) const {
+        float subtotal = mealPrice + (mealPrice * SALES_TAX_RATE);
+        float tip = subtotal * (tipPercent / 100.0f);
+        float total = subtotal + tip;
+        std::cout << "Total: " << total << std::endl;
+    }
+};
+
+int main() {
+    MealCalculator mealCalc;
+
+    float mealPrice;
     std::cout << "Enter Price: ";
     std::cin >> mealPrice;
+    mealCalc.setMealPrice(mealPrice);
 
     std::cout << std::fixed << std::setprecision(2);
 
-    float salesTax = mealPrice * SALES_TAX_RATE;
-    std::cout << "Tax: " << salesTax << std::endl;
+    mealCalc.calculateTax();
+    mealCalc.calculateSubtotal();
 
-    float subtotal = mealPrice + salesTax;
-    std::cout << "Subtotal: " << subtotal << std::endl;
-
-    float tipPercent = 0.0;
+    float tipPercent;
     std::cout << "Enter tip percentage (20)%: ";
     std::cin >> tipPercent;
 
-    float tip = subtotal * (tipPercent / 100.0f);
-    std::cout << "Tip: " << tip << std::endl;
-
-    float total = subtotal + tip;
-    std:: cout << "Total: " << total << std::endl;
+    mealCalc.calculateTip(tipPercent);
+    mealCalc.calculateTotal(tipPercent);
 
     char tmp;
     std::cin >> tmp;
 
     return 0;
-} // End main
+}
