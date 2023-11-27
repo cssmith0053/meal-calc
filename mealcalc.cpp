@@ -1,64 +1,51 @@
+// File: mealcalc.cpp
+// Class: COP 3003
+// Who: Christopher Smith & Angel Vera
+// Desc.: Calculate the total cost of a meal using price,
+// tip, and tax
+// --------------------------------------------------------
 #include <iostream>
 #include <iomanip>
 
-class MealCalculator {
-private:
-    float mealPrice;
-    const float SALES_TAX_RATE = 0.065;
+using namespace std;
 
-public:
-    MealCalculator() : mealPrice(0.0) {}
-
-    void setMealPrice(float price) {
-        mealPrice = price;
-    }
-
-    void calculateTax() const {
-        float salesTax = mealPrice * SALES_TAX_RATE;
-        std::cout << "Tax: " << salesTax << std::endl;
-    }
-
-    void calculateSubtotal() const {
-        float subtotal = mealPrice + (mealPrice * SALES_TAX_RATE);
-        std::cout << "Subtotal: " << subtotal << std::endl;
-    }
-
-    void calculateTip(float tipPercent) const {
-        float subtotal = mealPrice + (mealPrice * SALES_TAX_RATE);
-        float tip = subtotal * (tipPercent / 100.0f);
-        std::cout << "Tip: " << tip << std::endl;
-    }
-
-    void calculateTotal(float tipPercent) const {
-        float subtotal = mealPrice + (mealPrice * SALES_TAX_RATE);
-        float tip = subtotal * (tipPercent / 100.0f);
-        float total = subtotal + tip;
-        std::cout << "Total: " << total << std::endl;
-    }
+class MealCost {
+    private:
+        float price, tip, tax;
+    public:
+        // Constructor to initialize the meal object with initial values
+        MealCost(float oPrice, float oTip, float oTax)
+        : price(oPrice), tip(oTip), tax(oTax) {
+        }
+        // Function to calculate the total cost of the meal
+        float calculateTotalCost() const {
+            float tipAmount = price * (tip / 100.0);
+            float salesTax = price * (tax / 100.0);
+            return price + tipAmount + salesTax;
+        }
 };
 
 int main() {
-    MealCalculator mealCalc;
+    // Input variables
+    float oPrice{0.0}, oTip{0.0}, oTax{0.0};
 
-    float mealPrice;
-    std::cout << "Enter Price: ";
-    std::cin >> mealPrice;
-    mealCalc.setMealPrice(mealPrice);
+    // Get user input
+    cout << "Enter the price of the meal: $";
+    cin >> oPrice;
 
-    std::cout << std::fixed << std::setprecision(2);
+    cout << "Enter the percent of tip you'd like to leave: ";
+    cin >> oTip;
 
-    mealCalc.calculateTax();
-    mealCalc.calculateSubtotal();
+    cout << "Enter the sales tax of the state you live in: ";
+    cin >> oTax;
+    
+    // Create a MealCost object
+    MealCost meal(oPrice, oTip, oTax);
 
-    float tipPercent;
-    std::cout << "Enter tip percentage (20)%: ";
-    std::cin >> tipPercent;
-
-    mealCalc.calculateTip(tipPercent);
-    mealCalc.calculateTotal(tipPercent);
-
-    char tmp;
-    std::cin >> tmp;
+    // Calculate and display the total cost
+    cout << "\nTotal cost, including tip and sales tax: $" 
+    << fixed << setprecision(2) 
+    << meal.calculateTotalCost() << endl;
 
     return 0;
 }
