@@ -18,43 +18,50 @@ class MealCalculator {
         }
         
         void setPrice(float p) {
-            try {
-                basePrice = p;
-                if (basePrice < 0) {
-                    throw 1;
+            while (p < 0) {
+                try {
+                    if (p < 0) {
+                        throw 1;
+                    }
+                } catch (int e) {
+                    cout << "The price of the meal cannot be negative, please try again (ERROR NUMBER: " 
+                    << e << ")" << endl;
+                    cout << "$";
+                    cin >> p;
                 }
-            } catch (int e) {
-                cout << "The price of the meal cannot be negative, please try again (ERROR NUMBER: " 
-                << e << ")" << endl;
-                cout << "$";
-                cin >> basePrice;
             }
+            basePrice = p;
         }
         void setTip(float t) {
-            try {
-                tipPercentage = t;
-                if (tipPercentage < 0) {
-                    throw 2;
+            while (t < 0) {
+                try {
+                    if (t < 0) {
+                        throw 2;
+                    }
+                } catch (int e) {
+                    cout << "The percent of tip cannot be negative, please try again (ERROR NUMBER: "
+                    << e << ")" << endl;
+                    cin >> t;
                 }
-            } catch (int e) {
-                cout << "The percent of tip cannot be negative, please try again (ERROR NUMBER: "
-                << e << ")" << endl;
-                cin >> tipPercentage;
             }
+            tipPercentage = t;
         }
         void setTax(float u) {
-            try {
-                taxRate = u;
-                if (taxRate < 0 || taxRate > 100) {
-                    throw 3;
+            while (u < 0 || u > 100) {
+                try {
+                    if (u < 0 || u > 100) {
+                        throw 3;
+                    }
+                } catch (int e) {
+                    cout << "The percent of tip cannot be negative or greater than 100%, "
+                    << "please try again (ERROR NUMBER: "
+                    << e << ")" << endl;
+                    cin >> taxRate;
                 }
-            } catch (int e) {
-                cout << "The percent of tip cannot be negative or greater than 100%, please try again (ERROR NUMBER: "
-                << e << ")" << endl;
-                cin >> taxRate;
             }
+            taxRate = u;
         }
-    
+        
         float calculateTip() const {
             float tipAmount = basePrice * (tipPercentage / 100.0f);
             return tipAmount;
@@ -73,7 +80,7 @@ int main() {
     int numberOfPeople;
     MealCalculator meal;
 
-    cout << setw(40) << "Welcome to the Meal Calculator!" << endl;
+    cout << setw(55) << "Welcome to the Meal Calculator!" << endl;
 
     cout << "Enter the price of the meal: $";
     cin >> price;
