@@ -3,7 +3,7 @@
 // Who: Christopher Smith & Angel Vera
 // Desc.: Calculate the total cost, tax, and tip associated
 // with a meal and be able to split it
-// --------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 #include <iostream>
 #include <iomanip>
 
@@ -12,21 +12,50 @@ using namespace std;
 class MealCalculator {
     private:
         float basePrice, tipPercentage, taxRate;
+        char splitCheck;
         
     public:
-        MealCalculator() : basePrice(0.0f), tipPercentage(0.0f), taxRate(0.0f) {
+        MealCalculator() : basePrice(0.0), tipPercentage(0.0), taxRate(0.0) {
         }
         
         void setPrice(float p) {
-            basePrice = p;
+            try {
+                basePrice = p;
+                if (basePrice < 0) {
+                    throw 1;
+                }
+            } catch (int e) {
+                cout << "The price of the meal cannot be negative, please try again (ERROR NUMBER: " 
+                << e << ")" << endl;
+                cout << "$";
+                cin >> basePrice;
+            }
         }
         void setTip(float t) {
-            tipPercentage = t;
+            try {
+                tipPercentage = t;
+                if (tipPercentage < 0) {
+                    throw 2;
+                }
+            } catch (int e) {
+                cout << "The percent of tip cannot be negative, please try again (ERROR NUMBER: "
+                << e << ")" << endl;
+                cin >> tipPercentage;
+            }
         }
         void setTax(float u) {
-            taxRate = u;
+            try {
+                taxRate = u;
+                if (taxRate < 0 || taxRate > 100) {
+                    throw 3;
+                }
+            } catch (int e) {
+                cout << "The percent of tip cannot be negative or greater than 100%, please try again (ERROR NUMBER: "
+                << e << ")" << endl;
+                cin >> taxRate;
+            }
         }
-        
+    
         float calculateTip() const {
             float tipAmount = basePrice * (tipPercentage / 100.0f);
             return tipAmount;
@@ -41,7 +70,8 @@ class MealCalculator {
 };
 
 int main() {
-    float price{0.0f}, tip{0.0f}, tax{0.0f};
+    float price{0.0}, tip{0.0}, tax{0.0};
+    int numberOfPeople;
     MealCalculator meal;
 
     cout << setw(40) << "Welcome to the Meal Calculator!" << endl;
@@ -55,11 +85,14 @@ int main() {
     cout << "Enter the sale tax rate of the state or county if they differ: ";
     cin >> tax;
     meal.setTax(tax);
+    
+    cout << "Will the check be split (if not, enter 1), and if so, among how many people: ";
+    cin >> numberOfPeople;
 
     cout << fixed << setprecision(2);
-    cout << "\nTip amount: $" << meal.calculateTip() << endl;
-    cout << "Tax amount: $" << meal.calculateTax() << endl;
-    cout << "Total cost of the meal: $" << meal.calculateTotalCost() << endl;
+    cout << "\nTip amount: $" << meal.calculateTip() / numberOfPeople << endl;
+    cout << "Tax amount: $" << meal.calculateTax() / numberOfPeople << endl;
+    cout << "Total cost of the meal: $" << meal.calculateTotalCost() / numberOfPeople << endl;
     
     return 0;
 }
