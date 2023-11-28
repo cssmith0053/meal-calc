@@ -3,7 +3,7 @@
 // Who: Christopher Smith & Angel Vera
 // Desc.: Calculate the total cost, tax, and tip associated
 // with a meal and be able to split it
-// ---------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
 #include <iostream>
 #include <iomanip>
 
