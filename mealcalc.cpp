@@ -12,7 +12,6 @@ using namespace std;
 class MealCalculator {
     private:
         float basePrice, tipPercentage, taxRate;
-        char splitCheck;
         
     public:
         MealCalculator() : basePrice(0.0), tipPercentage(0.0), taxRate(0.0) {
